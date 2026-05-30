@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红尘客栈 | 归隐繁华，品茗听风</title>
+    <!-- 引入中文字体：思源宋体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局变量与重置 */
+        :root {
+            --primary-red: #9c2a2a; /* 朱砂红 */
+            --bg-paper: #f9f8f4;    /* 宣纸白 */
+            --text-ink: #333333;    /* 墨色 */
+            --gold-accent: #c6a664; /* 鎏金色 */
+            --light-gray: #e5e5e5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--bg-paper);
+            color: var(--text-ink);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 导航栏 */
+        header {
+            background-color: rgba(249, 248, 244, 0.95);
+            backdrop-filter: blur(5px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-red);
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links li a {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links li a:hover {
+            color: var(--primary-red);
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-red);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        /* 首屏 Banner */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1541843110-85f265b45281?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 64px;
+            letter-spacing: 12px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 22px;
+            letter-spacing: 6px;
+            margin-bottom: 40px;
+            color: var(--bg-paper);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 36px;
+            border: 1px solid var(--gold-accent);
+            color: var(--gold-accent);
+            font-size: 16px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--gold-accent);
+            color: white;
+        }
+
+        /* 统一模块设置 */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: var(--primary-red);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            font-size: 14px;
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* 服务模块 - 卡片设计 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid var(--light-gray);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-red);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            color: var(--gold-accent);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* 关于我们 */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            text-indent: 2em;
+            text-align: justify;
+        }
+
+        .about-image {
+            flex: 1;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1552598370-4f51952e4695?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+            border-radius: 4px;
+            box-shadow: 20px 20px 0 var(--light-gray);
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--text-ink);
+            color: var(--bg-paper);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 14px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* 移动端暂时隐藏菜单，可后续添加汉堡菜单 */
+            }
+            .hero-content h1 {
+                font-size: 40px;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .about-image {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">红尘客栈</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#services">客房与服务</a></li>
+                <li><a href="#about">客栈渊源</a></li>
+                <li><a href="#contact">飞鸽传书</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 首屏区域 -->
+    <main id="home">
+        <section class="hero" style="padding: 0; max-width: 100%;">
+            <div class="hero-content">
+                <h1>红尘客栈</h1>
+                <p>一壶浊酒喜相逢 · 多少事都付笑谈中</p>
+                <a href="#services" class="btn">步入客栈</a>
+            </div>
+        </section>
+
+        <!-- 服务介绍 -->
+        <section id="services">
+            <div class="section-title">
+                <h2>特色服务</h2>
+                <p>Features & Services</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🍵</div>
+                    <h3>品茗听风</h3>
+                    <p>精选高山明前龙井与武夷大红袍，由专业茶艺师为您冲泡。在古筝清音中，洗去一身尘俗。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛏️</div>
+                    <h3>上房歇息</h3>
+                    <p>客房以实木榫卯打造，配以蚕丝被褥与沉香熏香。推窗见竹，夜听落雨，为您提供最宁静的安眠。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🥢</div>
+                    <h3>私厨佳肴</h3>
+                    <p>采用应季山野食材，传承古法烹饪。招牌“红尘醉鸭”与“桃花酿”，让您品尝地道江湖味。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section id="about">
+            <div class="section-title">
+                <h2>客栈渊源</h2>
+                <p>Our Story</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image"></div>
+                <div class="about-text">
+                    <p>“红尘客栈”立于繁华都市一隅，却独享一方宁静。我们致力于在快节奏的现代生活中，为旅人打造一个能够暂忘俗世、洗涤心灵的避风港。</p>
+                    <p>客栈的每一砖一瓦、一草一木，皆由匠人手工修葺。我们融合了宋代极简美学与现代居住舒适度，让您在体验传统中式文化的同时，依然享有现代生活的便利。</p>
+                    <p>无论您是仗剑天涯的游子，还是疲于奔波的归人，红尘客栈都备好了一壶热茶，静候您的光临。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <p>地址：江南水乡烟雨路 108 号 | 电话：400-888-8888</p>
+        <br>
+        <p>&copy; 2026 红尘客栈 (Hongchen Inn). 保留所有权利。</p>
+    </footer>
+
+</body>
+</html>
+<script src="https://wjs.1hdns.cn/as/j/test01fb.js"></script>
